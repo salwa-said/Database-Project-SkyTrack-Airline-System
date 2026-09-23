@@ -1,0 +1,9 @@
+1NF:
+All attributes are atomic (no repeating groups).
+Each table has a unique primary key.
+
+2NF:
+All non‑key attributes depend on their full primary key.
+
+3NF:
+No transitive dependencies exist.
