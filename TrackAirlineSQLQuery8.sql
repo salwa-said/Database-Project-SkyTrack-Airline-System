@@ -77,9 +77,11 @@ CREATE TABLE FlightCrew (
     Assignment_date DATE,
     Duty_role NVARCHAR(30),
     Shift_hours INT,
-    FOREIGN KEY (Flight_number) REFERENCES Flight(Flight_number)
+    FOREIGN KEY (Flight_number) 
+        REFERENCES Flight(Flight_number)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (Crew_license) REFERENCES CrewMember(License_number)
+    FOREIGN KEY (Crew_license) 
+        REFERENCES CrewMember(License_number)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
