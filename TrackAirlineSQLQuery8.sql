@@ -127,3 +127,95 @@ INSERT INTO Flight VALUES ('SK106','2026-09-30 11:00:00','2026-09-30 16:00:00','
 INSERT INTO Flight VALUES ('SK107','2026-10-01 14:00:00','2026-10-01 20:00:00','Cancelled','DXB','JFK','B456');
 INSERT INTO Flight VALUES ('SK108','2026-10-02 05:00:00','2026-10-02 11:00:00','Completed','CDG','DXB','C789');
 
+INSERT INTO Passenger VALUES ('P001','Ali Hassan','ali.hassan@email.com','968123456','Omani','1990-05-12');
+INSERT INTO Passenger VALUES ('P002','John Smith','john.smith@email.com','001987654','American','1985-03-20');
+INSERT INTO Passenger VALUES ('P003','Fatima Khan','fatima.khan@email.com','971555123','Pakistani','1992-07-15');
+INSERT INTO Passenger VALUES ('P004','Pierre Dupont','pierre.dupont@email.com','331234567','French','1988-11-02');
+INSERT INTO Passenger VALUES ('P005','Maria Lopez','maria.lopez@email.com','341234567','Spanish','1995-09-10');
+INSERT INTO Passenger VALUES ('P006','Chen Wei','chen.wei@email.com','861234567','Chinese','1987-01-25');
+INSERT INTO Passenger VALUES ('P007','Ahmed Al-Sayed','ahmed.sayed@email.com','201234567','Egyptian','1993-12-05');
+INSERT INTO Passenger VALUES ('P008','Sophia Rossi','sophia.rossi@email.com','391234567','Italian','1991-06-18');
+
+
+INSERT INTO Booking (Booking_date,Seat_number,Class,Price,Paid,Flight_number,Passenger_ID)
+VALUES (GETDATE(),'12A','Economy',200,1,'SK101','P001');
+
+INSERT INTO Booking VALUES (GETDATE(),'14B','Business',500,1,'SK102','P002');
+INSERT INTO Booking VALUES (GETDATE(),'15C','First',1000,1,'SK103','P003');
+INSERT INTO Booking VALUES (GETDATE(),'16D','Economy',220,1,'SK104','P004');
+INSERT INTO Booking VALUES (GETDATE(),'17E','Business',550,1,'SK105','P005');
+INSERT INTO Booking VALUES (GETDATE(),'18F','First',1200,1,'SK106','P006');
+INSERT INTO Booking VALUES (GETDATE(),'19G','Economy',180,1,'SK107','P007');
+INSERT INTO Booking VALUES (GETDATE(),'20H','Business',600,1,'SK108','P008');
+INSERT INTO Booking VALUES (GETDATE(),'21I','Economy',210,1,'SK101','P002');
+INSERT INTO Booking VALUES (GETDATE(),'22J','First',1100,1,'SK102','P003');
+
+
+INSERT INTO CrewMember VALUES ('C001','Captain Khalid','Pilot');
+INSERT INTO CrewMember VALUES ('C002','First Officer James','Co-Pilot');
+INSERT INTO CrewMember VALUES ('C003','Sarah Ali','Flight Attendant');
+INSERT INTO CrewMember VALUES ('C004','Mohammed Noor','Flight Attendant');
+INSERT INTO CrewMember VALUES ('C005','Elena Petrova','Engineer');
+INSERT INTO CrewMember VALUES ('C006','David Brown','Pilot');
+
+
+INSERT INTO FlightCrew VALUES ('SK101','C001','2026-09-25','Pilot',8);
+INSERT INTO FlightCrew VALUES ('SK101','C003','2026-09-25','Flight Attendant',8);
+
+INSERT INTO FlightCrew VALUES ('SK102','C002','2026-09-26','Co-Pilot',7);
+INSERT INTO FlightCrew VALUES ('SK102','C004','2026-09-26','Flight Attendant',7);
+
+INSERT INTO FlightCrew VALUES ('SK103','C006','2026-09-27','Pilot',9);
+INSERT INTO FlightCrew VALUES ('SK103','C003','2026-09-27','Flight Attendant',9);
+
+INSERT INTO FlightCrew VALUES ('SK104','C001','2026-09-28','Pilot',8);
+INSERT INTO FlightCrew VALUES ('SK104','C004','2026-09-28','Flight Attendant',8);
+
+INSERT INTO FlightCrew VALUES ('SK105','C006','2026-09-29','Pilot',6);
+INSERT INTO FlightCrew VALUES ('SK105','C003','2026-09-29','Flight Attendant',6);
+
+INSERT INTO FlightCrew VALUES ('SK106','C001','2026-09-30','Pilot',7);
+INSERT INTO FlightCrew VALUES ('SK106','C004','2026-09-30','Flight Attendant',7);
+
+INSERT INTO FlightCrew VALUES ('SK107','C006','2026-10-01','Pilot',8);
+INSERT INTO FlightCrew VALUES ('SK107','C003','2026-10-01','Flight Attendant',8);
+
+INSERT INTO FlightCrew VALUES ('SK108','C001','2026-10-02','Pilot',9);
+INSERT INTO FlightCrew VALUES ('SK108','C004','2026-10-02','Flight Attendant',9);
+
+UPDATE Flight
+SET Status = 'Completed'
+WHERE Flight_number = 'SK101';
+
+
+UPDATE Flight
+SET Status = 'Cancelled'
+WHERE Flight_number = 'SK102';
+
+
+UPDATE Booking
+SET Price = Price * 1.10
+WHERE Class = 'Economy';
+
+
+UPDATE Passenger
+SET Phone = '968999999'
+WHERE National_ID = 'P001';
+
+
+UPDATE CrewMember
+SET Role = 'Engineer'
+WHERE License_number = 'C002';
+
+
+SELECT * FROM Flight WHERE Status = 'Cancelled';
+DELETE FROM Flight WHERE Flight_number = 'SK103';
+
+
+SELECT * FROM Booking WHERE Flight_number = 'SK103';
+DELETE FROM Booking WHERE Flight_number = 'SK103';
+
+SELECT * FROM Passenger WHERE National_ID = 'P001';
+DELETE FROM Passenger WHERE National_ID = 'P001';
+-- This DELETE will fail because Passenger P001 has existing bookings.
+-- The foreign key constraint prevents deleting a passenger who is still linked to bookings.
