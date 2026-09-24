@@ -219,3 +219,66 @@ SELECT * FROM Passenger WHERE National_ID = 'P001';
 DELETE FROM Passenger WHERE National_ID = 'P001';
 -- This DELETE will fail because Passenger P001 has existing bookings.
 -- The foreign key constraint prevents deleting a passenger who is still linked to bookings.
+
+
+
+----------
+---SkyTrack Airline System – Query Practice
+--Part 3: Data Queries
+--Basic Level:
+
+SELECT Flight_number, Status, Departure_datetime, Arrival_datetime
+FROM Flight
+ORDER BY Departure_datetime;
+
+
+SELECT full_name, Nationality, Email
+FROM Passenger
+ORDER BY full_name;
+
+SELECT Registration_number, Model, Manufacturer, Total_seating_capacity
+FROM Aircraft
+ORDER BY Total_seating_capacity DESC;
+
+
+
+SELECT DISTINCT Class
+FROM Booking;
+
+
+
+SELECT Flight_number, Status
+FROM Flight
+WHERE Status IN ('Delayed','Cancelled');
+
+
+SELECT full_name, Nationality
+FROM Passenger
+WHERE Nationality = 'Omani';
+
+
+
+SELECT IATA_code, Name, City, Country
+FROM Airport
+ORDER BY Country;
+
+
+-- MEDIUM LEVEL
+SELECT F.Flight_number, A1.Name, A2.Name
+FROM Flight F
+JOIN Airport A1 ON F.Origin_airport = A1.IATA_code
+JOIN Airport A2 ON F.Destination_airport = A2.IATA_code;
+
+SELECT B.Booking_id, P.full_name, B.Flight_number
+FROM Booking B
+JOIN Passenger P ON B.Passenger_ID = P.Passenger_ID;
+
+SELECT C.full_name, C.Role
+FROM FlightCrew FC
+JOIN CrewMember C ON FC.Crew_ID = C.Crew_ID
+WHERE FC.Flight_number = 'SK101';
+
+
+---Advanced Level
+
+SELECT F.Flight_number
