@@ -43,6 +43,8 @@ CREATE TABLE Passenger (
     Nationality NVARCHAR(50) NOT NULL,
     Date_of_birth DATE NOT NULL
 );
+ALTER TABLE Passenger
+ALTER COLUMN National_ID INT;
 
 CREATE TABLE Booking (
     Booking_id INT PRIMARY KEY IDENTITY(1,1),
@@ -236,7 +238,7 @@ SELECT full_name, Nationality, Email
 FROM Passenger
 ORDER BY full_name;
 
-SELECT Registration_number, Model, Manufacturer, Total_seating_capacity
+SELECT Registration_num  ber, Model, Manufacturer, Total_seating_capacity
 FROM Aircraft
 ORDER BY Total_seating_capacity DESC;
 
@@ -264,21 +266,71 @@ ORDER BY Country;
 
 
 -- MEDIUM LEVEL
-SELECT F.Flight_number, A1.Name, A2.Name
+SELECT F.Flight_number, OA.Name, DA.Name
 FROM Flight F
-JOIN Airport A1 ON F.Origin_airport = A1.IATA_code
-JOIN Airport A2 ON F.Destination_airport = A2.IATA_code;
+JOIN Airport OA ON F.Origin_airport = OA.IATA_code
+JOIN Airport DA ON F.Destination_airport = DA.IATA_code;
 
+
+SELECT * FROM Passenger
 SELECT B.Booking_id, P.full_name, B.Flight_number
 FROM Booking B
-JOIN Passenger P ON B.Passenger_ID = P.Passenger_ID;
+JOIN Passenger P ON B.Passenger_ID = P.National_ID;
+
+
+
+SELECT * FROM CrewMember
 
 SELECT C.full_name, C.Role
 FROM FlightCrew FC
-JOIN CrewMember C ON FC.Crew_ID = C.Crew_ID
+JOIN CrewMember C ON FC.Crew_license = C.License_number
 WHERE FC.Flight_number = 'SK101';
 
 
+SELECT * FROM   Aircraft
+
+--4
+SELECT F.Flight_number , A.Model
+FROM Flight F
+JOIN Aircraft A ON F.Aircraft_reg = A.Registration_number
+WHERE F.Status = 'Completed';
+
+
+SELECT * FROM Passenger
+SELECT * FROM Booking
+--5
+SELECT P.Full_name, COUNT(B.Booking_id)
+FROM Passenger P
+LEFT JOIN Booking B ON P.National_ID = B.Passenger_ID
+GROUP BY P.Full_name
+ORDER BY COUNT(B.Booking_id) DESC;
+
+
+--6
+SELECT Class, SUM(Price)
+FROM Booking
+GROUP BY Class;
+
+---7
+SELECT Aircraft_reg, COUNT(*)
+FROM Flight
+GROUP BY Aircraft_reg;
+
+
+---8
+SELECT Flight_number, COUNT(*)
+FROM Booking
+GROUP BY Flight_number
+HAVING COUNT(*) > 1;
+
+
+--9
+
+SELECT P.full_name, B.Flight_number, F.Origin_airport, F.Destination_airport, B.Class, B.Price
+FROM Booking B
+JOIN Passenger P ON B.Passenger_ID = P.National_ID
+JOIN Flight F ON B.Flight_number = F.Flight_number;
+
 ---Advanced Level
 
-SELECT F.Flight_number
+
